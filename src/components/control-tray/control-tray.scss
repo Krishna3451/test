@@ -104,15 +104,34 @@
 }
 
 .control-tray {
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  display: inline-flex;
+  left: 0;
+  right: 0;
+  background: var(--gray-900);
+  padding: 16px;
+  display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 8px;
-  padding-bottom: 18px;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  
+  @media (max-width: 768px) {
+    padding: 12px 8px;
+    gap: 8px;
+    
+    // Ensure buttons maintain proper size on smaller screens
+    button {
+      min-width: 40px;
+      height: 40px;
+      padding: 8px;
+      
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
 
   .disabled .action-button,
   .action-button.disabled {
