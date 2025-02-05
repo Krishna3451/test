@@ -50,11 +50,16 @@ function App() {
     setFacingMode(newFacingMode);
     
     try {
-      const newStream = await navigator.mediaDevices.getUserMedia({
+      const constraints = {
         video: {
-          facingMode: newFacingMode
-        }
-      });
+          facingMode: { exact: newFacingMode },
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false
+      };
+
+      const newStream = await navigator.mediaDevices.getUserMedia(constraints);
       
       if (videoRef.current) {
         videoRef.current.srcObject = newStream;
@@ -62,6 +67,26 @@ function App() {
       setVideoStream(newStream);
     } catch (error) {
       console.error('Error switching camera:', error);
+      // If exact constraint fails, try without exact
+      try {
+        const fallbackConstraints = {
+          video: {
+            facingMode: newFacingMode,
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          },
+          audio: false
+        };
+        
+        const fallbackStream = await navigator.mediaDevices.getUserMedia(fallbackConstraints);
+        
+        if (videoRef.current) {
+          videoRef.current.srcObject = fallbackStream;
+        }
+        setVideoStream(fallbackStream);
+      } catch (fallbackError) {
+        console.error('Fallback camera switch failed:', fallbackError);
+      }
     }
   };
 
