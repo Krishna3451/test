@@ -104,33 +104,15 @@
 }
 
 .control-tray {
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: inline-flex;
   justify-content: center;
-  align-items: center;
-  gap: 12px;
-  z-index: 1000;
-  
-  // Only add background and padding for mobile
-  @media (max-width: 768px) {
-    background: var(--gray-900);
-    padding: 12px 8px;
-    gap: 8px;
-    
-    button {
-      min-width: 40px;
-      height: 40px;
-      padding: 8px;
-      
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
-  }
+  align-items: flex-start;
+  gap: 8px;
+  padding-bottom: 18px;
 
   .disabled .action-button,
   .action-button.disabled {
