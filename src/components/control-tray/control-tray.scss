@@ -108,19 +108,18 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--gray-900);
-  padding: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
   z-index: 1000;
   
+  // Only add background and padding for mobile
   @media (max-width: 768px) {
+    background: var(--gray-900);
     padding: 12px 8px;
     gap: 8px;
     
-    // Ensure buttons maintain proper size on smaller screens
     button {
       min-width: 40px;
       height: 40px;

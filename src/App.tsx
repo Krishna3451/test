@@ -100,28 +100,11 @@ function App() {
     <div className="App">
       <LiveAPIProvider url={uri} apiKey={API_KEY}>
         <div className="streaming-console">
-          {!isMobileDevice() && <SidePanel />}
-          
-          {isMobileDevice() && (
-            <div className="mobile-tabs">
-              <button 
-                className={activeView === 'main' ? 'active' : ''} 
-                onClick={() => toggleView('main')}
-              >
-                Camera
-              </button>
-              <button 
-                className={activeView === 'console' ? 'active' : ''} 
-                onClick={() => toggleView('console')}
-              >
-                Console
-              </button>
-            </div>
-          )}
-
-          {(!isMobileDevice() || activeView === 'main') && (
-            <main>
-              <div className="main-app-area">
+          {/* Desktop View - Keeping original layout */}
+          {!isMobileDevice() && (
+            <>
+              <SidePanel />
+              <main className="main-app-area">
                 <div className="video-container">
                   <video
                     className={cn("stream", {
@@ -134,26 +117,62 @@ function App() {
                   />
                   <CameraToggle onToggle={handleCameraToggle} />
                 </div>
-                
                 <div className="solution-container">
                   <Altair />
                 </div>
-              </div>
-
+              </main>
               <ControlTray
                 videoRef={videoRef}
                 supportsVideo={true}
                 onVideoStreamChange={setVideoStream}
-              >
-                {/* put your own buttons here */}
-              </ControlTray>
-            </main>
+              />
+            </>
           )}
-          
-          {isMobileDevice() && activeView === 'console' && (
-            <div className="mobile-console">
-              <SidePanel />
-            </div>
+
+          {/* Mobile View */}
+          {isMobileDevice() && (
+            <>
+              <div className="mobile-tabs">
+                <button 
+                  className={activeView === 'main' ? 'active' : ''} 
+                  onClick={() => toggleView('main')}
+                >
+                  Camera
+                </button>
+                <button 
+                  className={activeView === 'console' ? 'active' : ''} 
+                  onClick={() => toggleView('console')}
+                >
+                  Console
+                </button>
+              </div>
+
+              {activeView === 'main' && (
+                <main className="main-app-area">
+                  <div className="video-container">
+                    <video
+                      className={cn("stream", {
+                        hidden: !videoRef.current || !videoStream,
+                        mirror: facingMode === 'user'
+                      })}
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                    />
+                    <CameraToggle onToggle={handleCameraToggle} />
+                  </div>
+                  <div className="solution-container">
+                    <Altair />
+                  </div>
+                </main>
+              )}
+              
+              {activeView === 'console' && (
+                <div className="mobile-console">
+                  <SidePanel />
+                </div>
+              )}
+            </>
           )}
         </div>
       </LiveAPIProvider>
