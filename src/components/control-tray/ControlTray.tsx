@@ -24,7 +24,6 @@ import { useWebcam } from "../../hooks/use-webcam";
 import { AudioRecorder } from "../../lib/audio-recorder";
 import AudioPulse from "../audio-pulse/AudioPulse";
 import "./control-tray.scss";
-import { CameraToggle } from '../camera-toggle/CameraToggle';
 
 export type ControlTrayProps = {
   videoRef: RefObject<HTMLVideoElement>;
@@ -193,12 +192,6 @@ function ControlTray({
               offIcon="videocam"
             />
           </>
-        )}
-        {webcam.switchCamera && (
-          <CameraToggle 
-            onToggle={webcam.switchCamera} 
-            isActive={webcam.isStreaming}
-          />
         )}
         {children}
       </nav>

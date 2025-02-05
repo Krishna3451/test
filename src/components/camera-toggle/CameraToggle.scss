@@ -1,0 +1,26 @@
+.camera-toggle-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 1000;
+  background: var(--gray-800);
+  color: var(--text);
+  border: 1px solid var(--gray-600);
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--gray-700);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+} 

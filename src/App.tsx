@@ -21,6 +21,7 @@ import SidePanel from "./components/side-panel/SidePanel";
 import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
 import cn from "classnames";
+import { CameraToggle } from './components/camera-toggle/CameraToggle';
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -36,6 +37,33 @@ function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
   // either the screen capture, the video or null, if null we hide it
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
+
+  const handleCameraToggle = async () => {
+    if (!videoStream) return;
+    
+    // Stop all tracks in the current stream
+    videoStream.getTracks().forEach(track => track.stop());
+    
+    // Toggle facing mode
+    const newFacingMode = facingMode === 'user' ? 'environment' : 'user';
+    setFacingMode(newFacingMode);
+    
+    try {
+      const newStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: newFacingMode
+        }
+      });
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = newStream;
+      }
+      setVideoStream(newStream);
+    } catch (error) {
+      console.error('Error switching camera:', error);
+    }
+  };
 
   return (
     <div className="App">
@@ -44,16 +72,21 @@ function App() {
           <SidePanel />
           <main>
             <div className="main-app-area">
-              {/* APP goes here */}
-              <Altair />
-              <video
-                className={cn("stream", {
-                  hidden: !videoRef.current || !videoStream,
-                })}
-                ref={videoRef}
-                autoPlay
-                playsInline
-              />
+              <div className="video-container">
+                <video
+                  className={cn("stream", {
+                    hidden: !videoRef.current || !videoStream,
+                  })}
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                />
+                <CameraToggle onToggle={handleCameraToggle} />
+              </div>
+              
+              <div className="solution-container">
+                <Altair />
+              </div>
             </div>
 
             <ControlTray

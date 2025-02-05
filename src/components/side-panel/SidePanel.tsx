@@ -40,7 +40,7 @@ export default function SidePanel() {
   const [selectedOption, setSelectedOption] = useState<{
     value: string;
     label: string;
-  } | null>(null);
+  }>({ value: "conversations", label: "Conversations" });
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   //scroll the log to the bottom when new logs come in
@@ -111,7 +111,9 @@ export default function SidePanel() {
           defaultValue={selectedOption}
           options={filterOptions}
           onChange={(e) => {
-            setSelectedOption(e);
+            if (e) {
+              setSelectedOption(e);
+            }
           }}
         />
         <div className={cn("streaming-indicator", { connected })}>
