@@ -101,6 +101,7 @@ function App() {
                 <video
                   className={cn("stream", {
                     hidden: !videoRef.current || !videoStream,
+                    mirror: facingMode === 'user'
                   })}
                   ref={videoRef}
                   autoPlay

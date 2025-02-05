@@ -237,6 +237,9 @@ body {
   border-radius: 32px;
   max-height: fit-content;
   margin: 0 auto;
+  &.mirror {
+    transform: scaleX(-1);
+  }
 }
 
 @media screen and (max-width: 768px) {

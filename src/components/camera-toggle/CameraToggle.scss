@@ -1,26 +1,40 @@
 .camera-toggle-btn {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
-  background: var(--gray-800);
+  background: transparent;
   color: var(--text);
-  border: 1px solid var(--gray-600);
-  border-radius: 20px;
-  padding: 10px 15px;
-  font-family: var(--font-family);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 8px;
 
   &:hover {
-    background: var(--gray-700);
+    background: rgba(255, 255, 255, 0.1);
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
   }
 
   @media (min-width: 768px) {
     display: none;
   }
+}
+
+.video-container {
+  position: relative;
 } 
