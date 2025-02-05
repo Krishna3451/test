@@ -1,0 +1,30 @@
+.camera-toggle-btn {
+  position: absolute;
+  bottom: 100px;
+  right: 20px;
+  background: var(--Neutral-20);
+  border: 1px solid var(--Neutral-30);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .icon {
+    color: var(--text);
+    font-size: 24px;
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--Neutral-30);
+  }
+} 
