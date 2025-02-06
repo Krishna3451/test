@@ -58,17 +58,17 @@ function AltairComponent() {
 
   useEffect(() => {
     setConfig({
-      model: "models/gemini-2.0-flash-exp",
+      model: "models/gemini-2.0-pro-exp-02-05",
       generationConfig: {
         responseModalities: "audio",
         speechConfig: {
-          voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } },
+          voiceConfig: { prebuiltVoiceConfig: { voiceName: "puck" } },
         },
       },
       systemInstruction: {
         parts: [
           {
-            text: `You are my helpful assistant. For graphs, use the "render_altair" function. For any text responses including explanations, stories, code, or other content, use the "render_solution" function to display formatted text. Always provide clear, well-formatted responses. Your voice will narrate the solution while the text is displayed. 
+            text: `You are a Intelligent assistant. For graphs, use the "render_altair" function. For any text responses including explanations, stories, code, or other content, use the "render_solution" function to display formatted text. Always provide clear, well-formatted responses. Your voice will narrate the solution while the text is displayed. 
 
 When writing code, wrap it in markdown code blocks with the appropriate language specified. For example:
 \`\`\`python
