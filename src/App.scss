@@ -203,6 +203,19 @@ body {
         margin: 0 auto;
         border-radius: 20px;
       }
+
+      @media screen and (min-width: 769px) {
+        max-width: 640px;
+        max-height: 360px;
+        margin: 0 auto;
+        
+        video.stream {
+          max-width: 100%;
+          max-height: 360px;
+          object-fit: contain;
+          border-radius: 20px;
+        }
+      }
     }
   }
 
@@ -227,6 +240,12 @@ body {
       width: 100%;
       max-width: 100%;
       border-radius: 20px;
+    }
+
+    @media screen and (min-width: 769px) {
+      max-width: 640px;
+      max-height: 360px;
+      object-fit: contain;
     }
   }
 
