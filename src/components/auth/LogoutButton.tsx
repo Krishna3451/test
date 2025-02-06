@@ -28,7 +28,6 @@ const LogoutButton = () => {
 
   return (
     <div className="logout-container">
-      <span className="user-name">{userName}</span>
       <button className="logout-button" onClick={handleLogoutClick}>
         Logout
       </button>
