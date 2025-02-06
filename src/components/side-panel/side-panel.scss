@@ -1,4 +1,19 @@
 .side-panel {
+  background: var(--Neutral-00);
+  width: 40px; /* when closed */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  transition: all 0.2s ease-in;
+  font-family: Arial, sans-serif;
+  border-right: 1px solid var(--gray-600);
+  color: var(--Neutral-90, #e1e2e3);
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+
   .react-select {
     background: var(--Neutral-20);
     color: var(--Neutral-90);
@@ -15,40 +30,34 @@
     }
 
     .react-select__option {
+      &:hover,
+      &:focus,
+      &:focus-within {
+        background: var(--Neutral-30);
+      }
     }
+
     .react-select__value-container {
+      padding: 0 8px;
     }
+
     .react-select__indicators {
+      padding: 0 4px;
     }
-    .react-select__option:hover,
-    .react-select__option:focus,
-    .react-select_option:focus-within {
-      background: var(--Neutral-30);
-    }
-    .react-select__option--is-focused: {
+
+    .react-select__option--is-focused {
       background: var(--Neutral-30);
     }
   }
-  background: var(--Neutral-00);
-  width: 40px; /* when closed */
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  transition: all 0.2s ease-in;
-  font-family: Arial, sans-serif;
-  border-right: 1px solid var(--gray-600);
-  color: var(--Neutral-90, #e1e2e3);
-  font-family: var(--font-family);
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 160%; /* 20.8px */
 
   .hidden {
     display: none !important;
   }
 
   &.open {
+    width: 400px;
+    height: 100vh;
+
     .top {
       h2 {
         left: 0%;
@@ -73,8 +82,7 @@
       font-size: 21px;
       font-style: normal;
       font-weight: 500;
-      line-height: 16px; /* 100% */
-
+      line-height: 16px;
       opacity: 0;
       display: none;
       left: -100%;
@@ -94,29 +102,47 @@
   .opener {
     height: 30px;
     transition: transform 0.2s ease-in;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--Neutral-20);
+    }
   }
 
   &:not(.open) {
     .side-panel-container {
       opacity: 0;
-      display: none;
-      transition: all 0.2s ease-in allow-discrete;
-      transition-delay: 0.1s;
-    }
-
-    .indicators .streaming-indicator {
-      width: 30px;
-      opacity: 0;
+      pointer-events: none;
     }
 
     .opener {
-      transform: translate(-50%, 0);
+      transform: rotate(180deg);
+    }
+  }
+
+  .side-panel-container {
+    opacity: 1;
+    transition: opacity 0.2s ease-in;
+    padding: 16px;
+    overflow-y: auto;
+    height: calc(100vh - 60px);
+
+    &::-webkit-scrollbar {
+      width: 8px;
     }
 
-    .input-container {
-      opacity: 0;
-      display: none;
-      transition: all 0.2s ease-in allow-discrete;
+    &::-webkit-scrollbar-track {
+      background: var(--Neutral-10);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--Neutral-30);
+      border-radius: 4px;
+
+      &:hover {
+        background: var(--Neutral-40);
+      }
     }
   }
 
@@ -150,15 +176,6 @@
         color: var(--Blue-500, #0d9c53);
       }
     }
-  }
-
-  .side-panel-container {
-    align-self: flex-end;
-    width: 400px;
-    flex-grow: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
-    /*scrollbar-gutter: stable both-edges;*/
   }
 
   .input-container {
@@ -232,6 +249,7 @@
     }
   }
 }
+
 .side-panel.open {
   width: 400px;
   height: 100vh;
@@ -258,6 +276,7 @@
   align-items: center;
   transition: all 0.2s ease-in;
 }
+
 .top button {
   background: transparent;
   border: 0;

@@ -17,12 +17,15 @@
 import { useRef, useState } from "react";
 import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import SidePanel from "./components/side-panel/SidePanel";
 import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
+import Login from "./components/auth/Login";
+import LogoutButton from "./components/auth/LogoutButton";
+import PhoneVerification from "./components/auth/PhoneVerification";
 import cn from "classnames";
 import { CameraToggle } from './components/camera-toggle/CameraToggle';
-import { isMobileDevice } from './utils/deviceDetection';
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -32,14 +35,11 @@ if (typeof API_KEY !== "string") {
 const host = "generativelanguage.googleapis.com";
 const uri = `wss://${host}/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent`;
 
-function App() {
-  // this video reference is used for displaying the active stream, whether that is the webcam or screen capture
-  // feel free to style as you see fit
+function AppContent() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  // either the screen capture, the video or null, if null we hide it
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
+  const { user, needsPhoneVerification } = useAuth();
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
-  const [activeView, setActiveView] = useState<'main' | 'console'>(isMobileDevice() ? 'main' : 'console');
 
   const handleCameraToggle = async () => {
     if (!videoStream) return;
@@ -92,71 +92,58 @@ function App() {
     }
   };
 
-  const toggleView = (view: 'main' | 'console') => {
-    setActiveView(view);
-  };
+  if (!user) {
+    return <Login />;
+  }
+
+  if (needsPhoneVerification) {
+    return <PhoneVerification onVerificationComplete={() => window.location.reload()} />;
+  }
 
   return (
+    <LiveAPIProvider url={uri} apiKey={API_KEY}>
+      <div className="streaming-console">
+        <LogoutButton />
+        <SidePanel />
+        <main>
+          <div className="main-app-area">
+            <div className="video-container">
+              <video
+                className={cn("stream", {
+                  hidden: !videoRef.current || !videoStream,
+                  mirror: facingMode === 'user'
+                })}
+                ref={videoRef}
+                autoPlay
+                playsInline
+              />
+              <CameraToggle onToggle={handleCameraToggle} />
+            </div>
+            
+            <div className="solution-container">
+              <Altair />
+            </div>
+          </div>
+
+          <ControlTray
+            videoRef={videoRef}
+            supportsVideo={true}
+            onVideoStreamChange={setVideoStream}
+          >
+            {/* put your own buttons here */}
+          </ControlTray>
+        </main>
+      </div>
+    </LiveAPIProvider>
+  );
+}
+
+function App() {
+  return (
     <div className="App">
-      <LiveAPIProvider url={uri} apiKey={API_KEY}>
-        <div className="streaming-console">
-          {!isMobileDevice() && <SidePanel />}
-          
-          {isMobileDevice() && (
-            <div className="mobile-tabs">
-              <button 
-                className={activeView === 'main' ? 'active' : ''} 
-                onClick={() => toggleView('main')}
-              >
-                Camera
-              </button>
-              <button 
-                className={activeView === 'console' ? 'active' : ''} 
-                onClick={() => toggleView('console')}
-              >
-                Console
-              </button>
-            </div>
-          )}
-
-          {(!isMobileDevice() || activeView === 'main') && (
-            <main>
-              <div className="main-app-area">
-                <div className="video-container">
-                  <video
-                    className={cn("stream", {
-                      hidden: !videoRef.current || !videoStream,
-                      mirror: facingMode === 'user'
-                    })}
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                  />
-                  <CameraToggle onToggle={handleCameraToggle} />
-                </div>
-                
-                <div className="solution-container">
-                  <Altair />
-                </div>
-              </div>
-
-              <ControlTray
-                videoRef={videoRef}
-                supportsVideo={true}
-                onVideoStreamChange={setVideoStream}
-              >
-                {/* put your own buttons here */}
-              </ControlTray>
-            </main>
-          )}
-          
-          {isMobileDevice() && activeView === 'console' && (
-            <div className="mobile-console">
-              <SidePanel />
-            </div>
-          )}
-        </div>
-      </LiveAPIProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </div>
   );
 }

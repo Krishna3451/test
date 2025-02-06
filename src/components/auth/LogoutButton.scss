@@ -1,0 +1,137 @@
+.logout-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1000;
+
+  .user-name {
+    color: #4a5568;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .logout-button {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #dc2626;
+    }
+  }
+
+  .logout-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+
+    .logout-confirm-modal {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+
+      h3 {
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+      }
+
+      p {
+        color: #4a5568;
+        margin-bottom: 1.5rem;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+
+        button {
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          font-size: 0.875rem;
+          cursor: pointer;
+          transition: background 0.2s;
+          border: none;
+
+          &.cancel-button {
+            background: #e2e8f0;
+            color: #4a5568;
+
+            &:hover {
+              background: #cbd5e0;
+            }
+          }
+
+          &.confirm-button {
+            background: #ef4444;
+            color: white;
+
+            &:hover {
+              background: #dc2626;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Media query for mobile view
+@media screen and (max-width: 768px) {
+  .logout-container {
+    position: absolute;
+    top: 1rem;
+    right: auto;
+    left: 10rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    .user-name {
+      font-size: 0.75rem;
+    }
+
+    .logout-button {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    .logout-confirm-modal {
+      width: 85%;
+      padding: 1.25rem;
+
+      h3 {
+        font-size: 1.1rem;
+      }
+
+      p {
+        font-size: 0.875rem;
+      }
+
+      .button-group button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
