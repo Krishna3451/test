@@ -1,10 +1,10 @@
 .camera-toggle-btn {
   position: absolute;
-  bottom: 120px;
-  right: 10px;
-  background: var(--Neutral-20);
-  border: 1px solid var(--Neutral-30);
-  border-radius: 30%;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
   width: 48px;
   height: 48px;
   display: flex;
@@ -20,11 +20,15 @@
   }
 
   .icon {
-    color: var(--text);
-    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M15 7h-2v5.59L7.59 18 9 19.41 15 13.41z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
   }
 
   &:hover:not(:disabled) {
-    background: var(--Neutral-30);
+    background: rgba(0, 0, 0, 0.7);
   }
 } 

@@ -119,7 +119,7 @@ function AppContent() {
                 autoPlay
                 playsInline
               />
-              <CameraToggle onToggle={handleCameraToggle} />
+              {videoStream && isMobileDevice() && <CameraToggle onToggle={handleCameraToggle} />}
             </div>
             
             <div className="solution-container">
