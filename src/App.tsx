@@ -26,6 +26,7 @@ import LogoutButton from "./components/auth/LogoutButton";
 import PhoneVerification from "./components/auth/PhoneVerification";
 import cn from "classnames";
 import { CameraToggle } from './components/camera-toggle/CameraToggle';
+import { isMobileDevice } from './utils/deviceDetection';
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -111,7 +112,7 @@ function AppContent() {
               <video
                 className={cn("stream", {
                   hidden: !videoRef.current || !videoStream,
-                  mirror: facingMode === 'user'
+                  mirror: facingMode === 'user' && isMobileDevice()
                 })}
                 ref={videoRef}
                 autoPlay
