@@ -105,7 +105,7 @@ function AppContent() {
     <LiveAPIProvider url={uri} apiKey={API_KEY}>
       <div className="streaming-console">
         <LogoutButton />
-        <SidePanel />
+        {!isMobileDevice() && <SidePanel />}
         <main>
           <div className="main-app-area">
             <div className="video-container">
