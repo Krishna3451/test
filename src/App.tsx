@@ -27,6 +27,7 @@ import PhoneVerification from "./components/auth/PhoneVerification";
 import cn from "classnames";
 import { CameraToggle } from './components/camera-toggle/CameraToggle';
 import { isMobileDevice } from './utils/deviceDetection';
+import { Analytics } from '@vercel/analytics/react';
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -132,7 +133,7 @@ function AppContent() {
             onVideoStreamChange={setVideoStream}
           >
             {/* put your own buttons here */}
-          </ControlTray>
+          </ControlTray>         
         </main>
       </div>
     </LiveAPIProvider>
@@ -145,6 +146,7 @@ function App() {
       <AuthProvider>
         <AppContent />
       </AuthProvider>
+      <Analytics />
     </div>
   );
 }
