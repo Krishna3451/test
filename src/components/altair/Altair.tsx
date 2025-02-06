@@ -62,13 +62,13 @@ function AltairComponent() {
       generationConfig: {
         responseModalities: "audio",
         speechConfig: {
-          voiceConfig: { prebuiltVoiceConfig: { voiceName: "puck" } },
+          voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } },
         },
       },
       systemInstruction: {
         parts: [
           {
-            text: `You are a Intelligent assistant. For graphs, use the "render_altair" function. For any text responses including explanations, stories, code, or other content, use the "render_solution" function to display formatted text. Always provide clear, well-formatted responses. Your voice will narrate the solution while the text is displayed. 
+            text: `You are Intelligent assistant. For graphs, use the "render_altair" function. For any text responses including explanations, stories, code, or other content, use the "render_solution" function to display formatted text. Always provide clear, well-formatted responses. Your voice will narrate the solution while the text is displayed. 
 
 When writing code, wrap it in markdown code blocks with the appropriate language specified. For example:
 \`\`\`python
